@@ -54,7 +54,6 @@ void selection(int* arr, int len){
     printArray(arr, len);   
 }
 
-
 int insertion_swaps = 0;
 int insertion_compares = 0;
 void insertion(int* arr, int len){
@@ -66,9 +65,36 @@ void insertion(int* arr, int len){
             arr[j + 1] = arr[j];
             j = j - 1;
         }
-        arr[j + 1] = el;
-        insertion_swaps+=1;
+        if(arr[j + 1] != el){
+            arr[j + 1] = el;
+            insertion_swaps+=1;
+        }
     }
+    printArray(arr, len);
+}
+
+int shell_swaps = 0;
+int shell_compares = 0;
+void shell(int* arr, int len){
+    for(int d = len/2; d > 0; d /= 2){
+        for (int i = d; i < len; i += 1){
+            int tmp = arr[i]; 
+            int j;
+            int count = 0;
+            for (j = i; j >= d && arr[j - d] > tmp; j -= d) {
+                shell_compares+=1;
+                arr[j] = arr[j - d];
+                count+=1;
+            }
+            if(count == 0){
+                shell_compares+=1;
+            }
+            if(count != 0){
+                arr[j] = tmp; 
+                shell_swaps+=1; 
+            }
+        }
+    } 
     printArray(arr, len);
 }
 
@@ -77,7 +103,7 @@ int main(){
     // int r = rand() % 5+1;
     // int c = rand() % 5+1;
     int r = 1;
-    int c = 4;
+    int c = 3;
     printf("rows: %d\n", r);
     printf("columns: %d\n", c);
     // int *arr = malloc((r*c) * sizeof(int));
@@ -88,7 +114,7 @@ int main(){
     //     }
     //     printf("\n");
     // }
-    int arr[] = {3,2,1,4};
+    int arr[] = {3,2,1};
 
     printf("Bubble sort\n");
     for(int i = 0; i<r; i++){
@@ -120,5 +146,14 @@ int main(){
     }
     printf("Insertion Compares: %d, Insertion Swaps: %d\n\n", insertion_compares, insertion_swaps);
 
-    
+        
+    printf("Shell sort\n");
+    for(int i = 0; i<r; i++){
+        int *tmp_shell = malloc(c * sizeof(int));
+        for(int j = 0; j<c; j++){
+            tmp_shell[j] = arr[i * c + j];
+        }
+        shell(tmp_shell, c);
+    }
+    printf("Shell Compares: %d, Shell Swaps: %d\n\n", shell_compares, shell_swaps);
 }
