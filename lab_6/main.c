@@ -131,10 +131,6 @@ void quick(int* arr, int low, int high, int len){
 
 int main(){
     srand(time(NULL));
-    // int r = rand() % 5+1;
-    // int c = rand() % 5+1;
-    // int r = 1;
-    // int c = 3;
     int r,c;
 
     printf("columns: ");
@@ -143,8 +139,7 @@ int main(){
     printf("rows: ");
     scanf("%d", &r);
     printf("\n");
-    // printf("rows: %d\n", r);
-    // printf("columns: %d\n", c);
+
     int *arr = malloc((r*c) * sizeof(int));
     for(int i = 0; i<r; i++){
         for(int j = 0; j<c; j++){
@@ -153,7 +148,6 @@ int main(){
         }
         printf("\n");
     }
-    // int arr[] = {3,2,1};
 
     printf("Bubble sort\n");
     for(int i = 0; i<r; i++){
@@ -163,8 +157,6 @@ int main(){
         }
         bubble(tmp_bubble, c);
     }
-    // printf("Bubble Compares: %d, Bubble Swaps: %d\n\n", bubble_compares, bubble_swaps);
-
     printf("Selection sort\n");
     for(int i = 0; i<r; i++){
         int *tmp_selection = malloc(c * sizeof(int));
@@ -173,7 +165,6 @@ int main(){
         }
         selection(tmp_selection, c);
     }
-    // printf("Selection Compares: %d, Selection Swaps: %d\n\n", selection_compares, selection_swaps);
 
     printf("Insertion sort\n");
     for(int i = 0; i<r; i++){
@@ -183,7 +174,6 @@ int main(){
         }
         insertion(tmp_insertion, c);
     }
-    printf("Insertion Compares: %d, Insertion Swaps: %d\n\n", insertion_compares, insertion_swaps);
 
         
     printf("Shell sort\n");
@@ -194,7 +184,6 @@ int main(){
         }
         shell(tmp_shell, c);
     }
-    // printf("Shell Compares: %d, Shell Swaps: %d\n\n", shell_compares, shell_swaps);
 
     printf("Quick sort\n");
     for(int i = 0; i<r; i++){
@@ -205,9 +194,10 @@ int main(){
         quick(tmp_quick, 0, c-1, c);
         printArray(tmp_quick, c);
     }
-    // printf("Quick Compares: %d, Quick Swaps: %d\n\n", quick_compares, quick_swaps);
 
     printf("            Bubble      Selection       Insertion       Shell       Quick\n");
-    printf("Compares      %d           %d               %d            %d           %d\n", bubble_compares, selection_compares, insertion_compares, shell_compares, quick_compares);
-    printf("Swaps         %d           %d               %d            %d           %d\n", bubble_swaps, selection_swaps, insertion_swaps, shell_swaps, quick_swaps);
+    printf("Compares      %d           %d               %d            %d           %d\n", bubble_compares, selection_compares, 
+                                                                            insertion_compares, shell_compares, quick_compares);
+    printf("Swaps         %d           %d               %d            %d           %d\n", bubble_swaps, selection_swaps, 
+                                                                                    insertion_swaps, shell_swaps, quick_swaps);
 }
