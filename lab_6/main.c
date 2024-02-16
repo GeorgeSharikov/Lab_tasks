@@ -98,23 +98,68 @@ void shell(int* arr, int len){
     printArray(arr, len);
 }
 
+int quick_swaps = 0;
+int quick_compares = 0;
+int partition(int* arr,int low,int high){
+    int pivot=arr[high];
+    int i=(low-1);
+   
+    for(int j=low;j<=high;j++){
+        quick_compares+=1;
+        if(arr[j]<pivot)
+        {
+            i++;
+            int tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+            quick_swaps+=1;
+        }
+    }
+    int tmp = arr[i+1];
+    arr[i+1] = arr[high];
+    arr[high] = tmp;
+    quick_swaps+=1;
+    return (i+1);
+}
+
+void quick(int* arr, int low, int high, int len){
+    if(low<high){
+        int pivot=partition(arr,low,high);
+        quick(arr,low,pivot-1, len);
+        quick(arr,pivot+1,high, len);
+    }
+    // else{
+    //     printArray(arr, len);
+    // }
+    
+}
+
 int main(){
     srand(time(NULL));
+    
     // int r = rand() % 5+1;
     // int c = rand() % 5+1;
-    int r = 1;
-    int c = 3;
-    printf("rows: %d\n", r);
-    printf("columns: %d\n", c);
-    // int *arr = malloc((r*c) * sizeof(int));
-    // for(int i = 0; i<r; i++){
-    //     for(int j = 0; j<c; j++){
-    //         arr[i * c + j] = rand() % 10;
-    //         printf("%d ", arr[i*c + j]);
-    //     }
-    //     printf("\n");
-    // }
-    int arr[] = {3,2,1};
+    // int r = 1;
+    // int c = 3;
+    int r,c;
+
+    printf("columns: ");
+    scanf("%d", &c);
+
+    printf("rows: ");
+    scanf("%d", &r);
+    printf("\n");
+    // printf("rows: %d\n", r);
+    // printf("columns: %d\n", c);
+    int *arr = malloc((r*c) * sizeof(int));
+    for(int i = 0; i<r; i++){
+        for(int j = 0; j<c; j++){
+            arr[i * c + j] = rand() % 10;
+            printf("%d ", arr[i*c + j]);
+        }
+        printf("\n");
+    }
+    // int arr[] = {3,2,1};
 
     printf("Bubble sort\n");
     for(int i = 0; i<r; i++){
@@ -156,4 +201,20 @@ int main(){
         shell(tmp_shell, c);
     }
     printf("Shell Compares: %d, Shell Swaps: %d\n\n", shell_compares, shell_swaps);
+
+    printf("Quick sort\n");
+    for(int i = 0; i<r; i++){
+        int *tmp_quick = malloc(c * sizeof(int));
+        for(int j = 0; j<c; j++){
+            tmp_quick[j] = arr[i * c + j];
+        }
+        quick(tmp_quick, 0, c-1, c);
+        printArray(tmp_quick, c);
+    }
+    printf("Quick Compares: %d, Quick Swaps: %d\n\n", quick_compares, quick_swaps);
+
+
+    pritnf("            Bubble      Selection       Insertion       Shell       Quick");
+    pritnf("Compares      %d           %d               %d            %d           %d");
+    pritnf("Swaps   ");
 }
