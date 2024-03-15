@@ -2,8 +2,41 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct tree {
+    char* data;
+    struct tree *LTree;
+    struct tree *RTree;
+}node;
+
+node* create(node *root, char* data){
+    node *tmp = malloc(sizeof(node));
+    tmp -> data = data;
+    tmp -> RTree = NULL;
+    tmp -> LTree = NULL;
+    root = tmp;
+    return root;
+}
+
+node* create(node *root, char* data){
+    node *root2 = root, *root3 = NULL;
+    node *tmp = malloc(sizeof(node));
+
+    tmp -> data = data;
+    while(root2 != NULL){
+        root3 = root2;
+        if (data < root2 -> data){
+            root2 = root2 -> LTree;
+        }    
+        else root2 = root2 -> RTree; 
+    }
+    tmp -> LTree = NULL;
+    tmp -> RTree = NULL;
+
+}
 
 void main(){
+
+
     FILE *fp;
     char path[30] = "./tests/examples.txt";
     fp = fopen(path, "r");
@@ -21,6 +54,8 @@ void main(){
        printf("%s\n", token);
        token = strtok(NULL, " ");
     }
+
+
 
     free(s);
 }
