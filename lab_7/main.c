@@ -17,7 +17,7 @@ node* create(node *root, char* data){
     return root;
 }
 
-node* create(node *root, char* data){
+node* add(node *root, char* data){
     node *root2 = root, *root3 = NULL;
     node *tmp = malloc(sizeof(node));
 
