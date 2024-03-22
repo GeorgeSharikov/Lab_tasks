@@ -1,40 +1,83 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef struct tree {
     char* data;
-    struct tree *LTree;
-    struct tree *RTree;
+    struct tree *l_tree;
+    struct tree *r_tree;
 }node;
 
-node* create(node *root, char* data){
+node* new_node(char* value){
     node *tmp = malloc(sizeof(node));
-    tmp -> data = data;
-    tmp -> RTree = NULL;
-    tmp -> LTree = NULL;
-    root = tmp;
-    return root;
+    tmp -> data = value;
+    tmp -> r_tree = NULL;
+    tmp -> l_tree = NULL;
+    return tmp;
 }
 
-node* add(node *root, char* data){
-    node *root2 = root, *root3 = NULL;
-    node *tmp = malloc(sizeof(node));
-
-    tmp -> data = data;
-    while(root2 != NULL){
-        root3 = root2;
-        if (data < root2 -> data){
-            root2 = root2 -> LTree;
-        }    
-        else root2 = root2 -> RTree; 
+node* insert(node *node, char* value){
+    if (node == NULL) return new_node(value);
+    //printf("%s, %s: %d\n", node->data, value, strcmp(node->data, value));
+    if (strcmp(node->data, value) > 0) {
+        //node *tmp = insert(node->l_tree, value);
+        //node->l_tree = tmp;
+        node->l_tree = insert(node->l_tree, value);
     }
-    tmp -> LTree = NULL;
-    tmp -> RTree = NULL;
+    else if (strcmp(node->data, value) <= 0) {
+        //node* tmp = insert(node->r_tree, value);
+        //node->r_tree = tmp;
+        node->r_tree = insert(node->r_tree, value);
+    }
+    return node;
+}
 
+int filter(char* s, int len, FILE* fp) {
+    int actual_size = 0;
+    int curr = 0;
+    for (int i = 0; i < len; i++) {
+        char tmp = fgetc(fp);
+        if (tmp != '.' && tmp != ',' && tmp != '!' && tmp != '?') {
+            s[curr] = tmp;
+            actual_size += 1;
+            curr += 1;
+        }
+    }
+    return actual_size;
+}
+
+void print_tree_forward(node* node) {
+    if (node != NULL) 
+    {
+        printf("%s\n", node->data);
+        print_tree_forward(node->l_tree);
+        print_tree_forward(node->r_tree);
+    }
+}
+
+void print_tree_backward(node* node) {
+    if (node != NULL)
+    {
+        print_tree_backward(node->l_tree);
+        print_tree_backward(node->r_tree);
+        printf("%s\n", node->data);
+    }
+}
+
+void print_tree_central(node* node) {
+    if (node != NULL)
+    { 
+        print_tree_central(node->l_tree);
+        printf("%s\n", node->data);
+        print_tree_central(node->r_tree);
+        
+    }
 }
 
 void main(){
+    bool is_tree_created = false;
+    node* root = NULL;
 
 
     FILE *fp;
@@ -51,25 +94,22 @@ void main(){
 
     char * token = strtok(s, " ");
     while( token != NULL ) {
-       printf("%s\n", token);
-       token = strtok(NULL, " ");
+        if (!is_tree_created) {
+            root = insert(root, token);
+            is_tree_created = true;
+        }else insert(root, token);
+
+        //printf("%s\n", token);
+        token = strtok(NULL, " ");
     }
 
-
-
+    printf("Forward\n");
+    print_tree_forward(root);
+    printf("\n");
+    printf("Backward\n");
+    print_tree_backward(root);
+    printf("\n");
+    printf("Central\n");
+    print_tree_central(root);
     free(s);
-}
-
-int filter(char* s, int len, FILE* fp){
-    int actual_size = 0;
-    int curr = 0;
-    for(int i = 0; i < len; i++){
-        char tmp = fgetc(fp);
-        if (tmp != '.' && tmp != ',' && tmp != '!' && tmp != '?') {
-            s[curr] = tmp;
-            actual_size+=1;
-            curr+=1;
-        }
-    }
-    return actual_size;
 }
