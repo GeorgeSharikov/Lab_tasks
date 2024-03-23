@@ -78,17 +78,18 @@ void print_tree_central(node* node) {
 void search(node* node, char letter) {
     if (node != NULL)
     { 
-        if((node->data)[0] == letter) printf("%s", node->data);
-        print_tree_central(node->l_tree);
-        print_tree_central(node->r_tree);
+        if((node->data)[0] == letter) printf("%s\n", node->data);
+        search(node->l_tree, letter);
+        search(node->r_tree, letter);
         
     }
 }
 
 void main(){
     char letter;
-    printf("Enter letter");
+    printf("Enter letter: ");
     scanf("%c", &letter);
+    printf("\n");
 
     bool is_tree_created = false;
     node* root = NULL;
@@ -116,8 +117,9 @@ void main(){
         token = strtok(NULL, " ");
     }
 
-    printf("Search by letter %c", letter);
-    printf("\n\n");
+    printf("Search by letter %c:\n", letter);
+    search(root, letter);
+    printf("\n");
     printf("Forward:\n");
     print_tree_forward(root);
     printf("\n");
