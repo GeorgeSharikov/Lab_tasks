@@ -4,6 +4,11 @@
 
 
 #define MAX_SZ 256
+
+// typedef struct List {
+
+// }
+
 int main()
 {   
     // char *street = malloc(MAX_SZ);
@@ -22,9 +27,31 @@ int main()
     char buffer[255];
     
     FILE* fp = fopen("mock.txt", "r");
-
+    int str_count = 0;
     while(fgets(buffer, bufferLength, fp)) {
-        printf("%s\n", buffer);
+        str_count += 1;
+
+        char * token = strtok(buffer, ";");
+
+        char* name[3];
+        int name_len = 0;
+        char* street;
+        int c = 0;
+        while( token != NULL ) {
+            if(c <= 2){
+                name_len+=strlen(token);
+                name[c] = token;
+            }else {
+                printf("HERE");
+                street = token;
+            }
+            c+=1;
+            token = strtok(NULL, ";");
+        }
+        printf("%s\n", street);
+        char *full_name = (char *)malloc(name_len);
+        snprintf( full_name, name_len, "%s%s%s", name[0], name[1], name[2]);
+        printf("%s;%s",full_name, street);
     }
 
     fclose(fp);

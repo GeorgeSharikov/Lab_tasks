@@ -1,0 +1,7 @@
+John; Johnes; Alvarez; Wallstreet, 12;
+Joshua; Minor; Mayberry; Allen Street, 10;
+Elisabeth; Lamirez; Moore; Allen Street, 2;
+Willow; Jack; Terry; Astor Place, 3; 
+Juliet; Lock; Peck; Beach Street, 16;
+Aamina; Valentine; Harris; Beach Street, 22;
+Abdulrahman; Ali; Sweeney; Beach Street, 17;
