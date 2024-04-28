@@ -56,13 +56,6 @@ void search(node *item, char* street_par, int building_par) {
                 }
             }
         }
-        //printf("%s", street_par);
-        //printf("%s\n", item->street);
-        //printf("%d\n", strcmp(item->street, street_par));
-        //printf("FINALLY\n");
-        //printf("Street is %s\n", item->street);
-        //printf("Build is %d\n", item->building);
-        //printf("Name is %s\n", item->name);
         item = item->next;
     } while (item != NULL);
 }
@@ -129,19 +122,9 @@ int main()
         snprintf(full_name, name_len + 1, "%s%s%s", name[0], name[1], name[2]);
 
         int item_index = get_index(street);
-        //printf("%s : %d\n", street, item_index);
-
         push(&arr[item_index], street, building, full_name);
 
     }
-    //printf("%s : %s\n", arr[3]->name, arr[3]->street);
-    //printf("%s : %s\n", arr[14]->name, arr[14]->street);
-    //printf("%s : %s\n", arr[14]->next->name, arr[14]->next->street);
-    //printf("%s : %s\n", arr[14]->next->next->name, arr[14]->next->next->street);
-    //printf("%s : %s\n", arr[7]->name, arr[7]->street);
-    //printf("%s : %s\n", arr[7]->next->name, arr[7]->next->street);
-    //printf("%s : %s\n\n", arr[11]->name, arr[11]->street);
-
     int ind = get_index(street_par_n);
     
     search(arr[ind], street_par_n, building_par);
